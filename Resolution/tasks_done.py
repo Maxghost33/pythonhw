@@ -1,5 +1,6 @@
 import os
 import time
+import random
 
 def return_str(arg):
     print ('"Hello, ' + str(arg) + '!"')
@@ -59,8 +60,23 @@ def diagonalReverse(lst):
     return tmp
 
 
+def game(a,b):
+    rand = random.randint(a, b)
+    print (rand)
+    while True:
+        c = raw_input('Choose your int number: ')
+        if int(c) < 0:
+            print ('You must choose int. Try again!')
+            continue 
+        elif rand == int(c):
+            print ('Congratulate')
+            break
+        else:
+            print ('Try again!')
+            continue
+
 def main():
-    diagonalReverse(([1,2,3], [4,5,6], [7,8,9]))
+    game(4,67)
 
 if __name__ == "__main__":
     main()
