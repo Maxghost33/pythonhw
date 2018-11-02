@@ -2,6 +2,18 @@ import os
 import time
 import random
 
+
+def charFreq(arg):
+    dictionary = {}
+    for i in arg:
+        if i not in dictionary.keys():
+            dictionary[i] = 1
+        else:
+            dictionary[i] += 1
+    print (dictionary)
+    return dictionary
+
+
 def return_str(arg):
     print ('"Hello, ' + str(arg) + '!"')
 
@@ -75,8 +87,34 @@ def game(a,b):
             print ('Try again!')
             continue
 
-def main():
-    game(4,67)
 
+def balanced_str(string):
+    opening = ("[")
+    closing = ("]")
+    dictionary = dict(zip(opening, closing))
+    arr = []
+    if string[0] == closing or string[-1] == opening:
+        return False
+    for i in string:
+        if i == opening:
+            arr.append(dictionary[i])
+        elif i == closing:
+            if not arr:
+                return False
+            if arr[-1] == i:
+                arr.pop() 
+            else:
+                return False            
+    return True
+
+
+def main():
+    charFreq("abbabcbdbabdbdbabababcbcbahhbhloll")
+    #temp = balanced_str("[]][[]")
+    #if balanced_str("[[][]]") == True:
+    #    print("Balanced")
+    #else:
+    #    print("Not balanced")
+    
 if __name__ == "__main__":
     main()
