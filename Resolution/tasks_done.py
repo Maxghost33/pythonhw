@@ -3,6 +3,19 @@ import time
 import random
 
 
+
+def decToBin(value):
+    arr = []
+    integer = int(value)
+    while (integer // 2) >= 0:
+        temp = integer % 2
+        integer = integer // 2
+        arr.append(temp)
+        if integer == 0:
+            break
+    integer = int(("".join(str(i) for i in arr))[::-1])
+    print(integer)
+
 def charFreq(arg):
     dictionary = {}
     for i in arg:
@@ -109,7 +122,8 @@ def balanced_str(string):
 
 
 def main():
-    charFreq("abbabcbdbabdbdbabababcbcbahhbhloll")
+    decToBin(121)
+    #charFreq("abbabcbdbabdbdbabababcbcbahhbhloll")
     #temp = balanced_str("[]][[]")
     #if balanced_str("[[][]]") == True:
     #    print("Balanced")
