@@ -86,16 +86,13 @@ class department(object):
     def give_salary(self):
         for i in self._list:
             print(i.name + " " + i.secname + ": got salary " + str(int(i.salary)))
-    
-    def getlist(self):
-        pass
 
     def setlist(self, value):
         for i in value:
             self._list.append(i)
         return self._list
 
-    lists = property(getlist, setlist, "property lists")
+    lists = property(fset = setlist, doc="property lists")
 
 def main():
     Dep = department([])
