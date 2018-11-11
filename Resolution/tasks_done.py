@@ -6,6 +6,8 @@ import random
 
 def decToBin(value):
     arr = []
+    if value < 0:
+        raise Exception
     integer = int(value)
     while (integer // 2) >= 0:
         temp = integer % 2
@@ -15,6 +17,7 @@ def decToBin(value):
             break
     integer = int(("".join(str(i) for i in arr))[::-1])
     print(integer)
+    return integer
 
 def charFreq(arg):
     dictionary = {}
@@ -31,7 +34,7 @@ def return_str(arg):
     print ('"Hello, ' + str(arg) + '!"')
     return '"Hello, ' + str(arg) + '!"'
 
-def sum(arr):
+def summ(arr):
     sum = 0
     for i in arr:
         sum +=i
@@ -58,10 +61,17 @@ def isPalindrome(string):
 
 def histogram(arr):
     print ("```")
+    temp = []
     for i in arr:
         time.sleep(2)
-        print (i*'*')       
+        if i < 0:
+            print("```")
+            raise Exception
+        else:
+            print (i*'*')
+            temp.append(i*'*')       
     print ("```")
+    return temp
 
 def caesarCipher(string, key):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -90,16 +100,21 @@ def game(a,b):
     rand = random.randint(a, b)
     print (rand)
     while True:
-        c = raw_input('Choose your int number: ')
-        if int(c) < 0:
-            print ('You must choose int. Try again!')
-            continue 
-        elif rand == int(c):
-            print ('Congratulate')
+        try:
+            c = int(input('Choose your int number: '))
+        except ValueError:
+            print("Not integer value")
             break
         else:
-            print ('Try again!')
-            continue
+            if int(c) < 0:
+                print ('You must choose int. Try again!')
+                continue 
+            elif rand == int(c):
+                print ('Congratulate')
+                return int(c)
+            else:
+                print ('Try again!')
+                continue
 
 
 def balanced_str(string):
@@ -123,7 +138,12 @@ def balanced_str(string):
 
 
 def main():
-    reverse(1234567)
+    decToBin(100)
+    #game(1,10)
+    #diagonalReverse([[1,2,3], [4,5,6,'',4,10], [7,8,9,9]])
+    #caesarCipher("abczyw", 4)
+    #print(isPalindrome(12345))
+    #reverse(1234567)
     #decToBin(121)
     #charFreq("abbabcbdbabdbdbabababcbcbahhbhloll")
     #temp = balanced_str("[]][[]")
