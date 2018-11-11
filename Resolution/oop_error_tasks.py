@@ -1,6 +1,34 @@
 import os
 
 
+class Error(Exception):
+    def __init__(self):
+        Exception.__init__(self)
+
+class SalaryGivingError(Error):
+    def __init__(self):
+        Error.__init__(self)
+        self.message = "Object does not exist in Employee and can`t give method give_salary()"
+    
+    def __str__(self):
+        return "Object does not exist in Employee and  can`t give method give_salary()"
+
+class NotEmployeeException(Error):
+    def __init__(self):
+        Error.__init__(self)
+        self.message = "List does not exist type Employee"
+
+    def __str__(self):
+        return "Some arguments are not exist object type Employee"
+
+class WrongEmployeeRoleError(Error):
+    def __init__(self, second_name):
+        Error.__init__(self)
+        self.second_name = second_name
+    def __str__(self):
+        return "Employee " +  self.second_name + " has unexpected role!"
+
+
 class Employee(object):
     def __init__(self, name, secname, salary, experiance):
         self.name = name
@@ -57,6 +85,15 @@ class manager(Employee):
         return self._team
     
     def setteam (self, members):
+        count = 0
+        for i in members:
+            if type(i) not in (manager, designer, developer):
+                count += 1
+        if len(members) == 0 or count == len(members) or count > 0:
+            raise NotEmployeeException
+        for i in members:
+            if type(i) == manager:
+                raise WrongEmployeeRoleError(i.secname)
         for i in members:
             self._team.append(i)
         return self._team
@@ -84,29 +121,45 @@ class department(object):
                 
     
     def give_salary(self):
+        #try:
+        for i in self._list:
+            if type(i) not in (manager, designer, developer):
+                raise SalaryGivingError
         for i in self._list:
             print(i.name + " " + i.secname + ": got salary " + str(int(i.salary)))
+        #except SalaryGivingError as ex:
+        #   print(ex.message)
 
     def setlist(self, value):
-        for i in value:
+        self._list.extend(value)
+        return self._list
+    def add_to_team (self, m, t):
+        m.teams = t
+        self._list.append(m)
+        for i in t:
             self._list.append(i)
         return self._list
-
+ 
     lists = property(fset = setlist, doc="property lists")
 
 def main():
     Dep = department([])
     A = manager("Manager", "Cool", 1000, 10, [], [])
     D = designer("Web", "Designer", 1000, 10, 0.5, [A])
-    B = developer("Max", "Zhovanik", "500", 2, [A])
-    C = developer ("Max", "Goose", "500", 0.5, [A])
+    B = developer("Max", "Zhovanik", 500, 2, [A])
+    C = developer ("Max", "Goose", 500, 0.5, [A])
+    S = "Error"
+    Q = manager("Manager2", "Cool2", 10000, 10, [], [])
+    F = developer("Ghost", "Goose", 550, 1, [Q])
     A.teams = [B, C, D]
     A.get_salary()
     B.get_salary()
     C.get_salary()
     D.get_salary()
-    Dep.lists = [A, B, C, D]
+    Dep.add_to_team(A, [Q, C, F])
+    Dep.lists = [Q, D, B]
     Dep.give_salary()
-    print(B)
+
+
 if __name__ == "__main__":
     main()
