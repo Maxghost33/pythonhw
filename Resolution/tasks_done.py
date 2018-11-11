@@ -29,19 +29,20 @@ def charFreq(arg):
 
 def return_str(arg):
     print ('"Hello, ' + str(arg) + '!"')
+    return '"Hello, ' + str(arg) + '!"'
 
 def sum(arr):
     sum = 0
     for i in arr:
         sum +=i
-    #print (sum)
+    print (sum)
     return sum
 
 def multiply(lst):
     mlt = 1
     for i in lst:
         mlt *=i
-    #print (mlt)
+    print (mlt)
     return (mlt)
 
 def reverse(string):
@@ -81,7 +82,7 @@ def diagonalReverse(lst):
     for k in range(len(lst)):
         tmp.append(arr[:len(lst)])
         arr = arr[len(lst):]
-    print tmp
+    print (tmp)
     return tmp
 
 
@@ -122,7 +123,8 @@ def balanced_str(string):
 
 
 def main():
-    decToBin(121)
+    reverse(1234567)
+    #decToBin(121)
     #charFreq("abbabcbdbabdbdbabababcbcbahhbhloll")
     #temp = balanced_str("[]][[]")
     #if balanced_str("[[][]]") == True:
