@@ -44,7 +44,7 @@ class Employee(object):
             self.salary = int(self.salary) + 200
         elif self.exp > 5:
             self.salary = int(self.salary)*1.2 +  500
-        #print (int(self.salary))
+        print (int(self.salary))
         return int(self.salary)
  
 class developer(Employee):
@@ -66,7 +66,7 @@ class designer(Employee):
 
     def get_salary(self):
         self.salary = super().get_salary()*self.coeff
-        #print (self.salary)
+        print (self.salary)
         return int(self.salary)
 
 
@@ -89,14 +89,20 @@ class manager(Employee):
         for i in members:
             if type(i) not in (manager, designer, developer):
                 count += 1
-        if len(members) == 0 or count == len(members) or count > 0:
-            raise NotEmployeeException
-        for i in members:
-            if type(i) == manager:
-                raise WrongEmployeeRoleError(i.secname)
-        for i in members:
-            self._team.append(i)
-        return self._team
+        try:
+            if len(members) == 0 or count == len(members) or count > 0:
+                raise NotEmployeeException
+            for i in members:
+                if type(i) == manager:
+                    raise WrongEmployeeRoleError(i.secname)
+        except NotEmployeeException as ex:
+            print(ex.message)
+        except WrongEmployeeRoleError:
+            print(WrongEmployeeRoleError(i.secname))
+        else:
+            for i in members:
+                self._team.append(i)
+            return self._team
     
     def delteam(self):
         del self._team
@@ -108,7 +114,7 @@ class manager(Employee):
             self.salary = super().get_salary() + 300
         elif sum(type(i) == developer for i in self._team) > len(self._team) / 2:
             self.salary = super().get_salary()*1.1
-        #print(int(self.salary))
+        print(int(self.salary))
         return (int(self.salary))
     
     teams = property(getteam, setteam, delteam, "property teams")
@@ -121,14 +127,15 @@ class department(object):
                 
     
     def give_salary(self):
-        #try:
-        for i in self._list:
-            if type(i) not in (manager, designer, developer):
-                raise SalaryGivingError
-        for i in self._list:
-            print(i.name + " " + i.secname + ": got salary " + str(int(i.salary)))
-        #except SalaryGivingError as ex:
-        #   print(ex.message)
+        try:
+            for i in self._list:
+                if type(i) not in (manager, designer, developer):
+                    raise SalaryGivingError
+        except SalaryGivingError as ex:
+            print("Exception: " + ex.message)
+        else:
+            for i in self._list:
+                print(i.name + " " + i.secname + ": got salary " + str(int(i.salary)))
 
     def setlist(self, value):
         self._list.extend(value)
@@ -151,13 +158,13 @@ def main():
     S = "Error"
     Q = manager("Manager2", "Cool2", 10000, 10, [], [])
     F = developer("Ghost", "Goose", 550, 1, [Q])
-    A.teams = [B, C, D]
+    A.teams = [B, C, Q]
     A.get_salary()
     B.get_salary()
     C.get_salary()
     D.get_salary()
     Dep.add_to_team(A, [Q, C, F])
-    Dep.lists = [Q, D, B]
+    Dep.lists = [Q, D, B, "AAA"]
     Dep.give_salary()
 
 
